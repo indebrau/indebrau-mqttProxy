@@ -1,0 +1,15 @@
+{
+  "name": "mqttproxy",
+  "version": "0.0.1",
+  "description": "A proxy for forwarding mqtt messages to las2peer",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Peter de Lange",
+  "license": "ISC",
+  "dependencies": {
+    "mqtt": "2.18.8",
+    "graphql-request": "^1.8.2"
+  }
+}
