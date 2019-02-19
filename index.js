@@ -5,10 +5,10 @@ const userMail = 'InputUser';
 const userName = 'InputUser';
 const userPw = 'Ewi_g9fTD}Nr%Xj@';
 const backendAppSecret = 'wZL_my[iy3Z8XNd';
-const backendLocation = 'http://localhost:4000';
+const backendLocation = 'https://indebrau-backend.herokuapp.com';
 
 var mqttClient = MQTT.connect('tcp://localhost:1883', {
-  clientId: 'braustube-device'
+  clientId: 'braustube-mqttProxy'
 });
 
 var graphQLClient = new GraphQLClient(backendLocation);
@@ -77,22 +77,20 @@ async function main() {
       Authorization: 'Bearer ' + token
     }
   });
-  console.log('Starting');
+  console.log('Starting...');
 
   // now we subscribe to all topics we want to put into the database
   // TODO
-  mqttClient.subscribe('fermenter1/temperature/');
-
-  console.log('Done');
+  mqttClient.subscribe('fermentation/fridge/temperature');
+  mqttClient.subscribe('fermentation/freezer/temperature');
+  mqttClient.subscribe('mashing/mashkettle/temperature');
+  console.log('Subscriptions done!');
 }
-mqttClient.on('message', function(topic, message) {
-  process(JSON.parse(message.toString()));
-});
 
-async function process(message) {
-  let sensorName = message.sensorName;
-  let sensorValue = message.sensorValue;
-  let sensorTimeStamp = message.sensorTimeStamp;
+mqttClient.on('message', function(topic, message) {
+  let sensorName = topic.toString();
+  let sensorValue = message.toString();
+  let sensorTimeStamp = new Date().toJSON();
   let sensorData = {
     sensorName: sensorName,
     sensorTimeStamp: sensorTimeStamp,
@@ -111,4 +109,4 @@ async function process(message) {
   } catch (e) {
     console.log(e);
   }
-}
+});
