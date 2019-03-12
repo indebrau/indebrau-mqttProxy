@@ -1,8 +1,9 @@
 {
   "name": "mqttproxy",
   "version": "0.0.1",
-  "description": "A proxy for forwarding mqtt messages to las2peer",
+  "description": "A proxy for forwarding MQTT Messages to a GraphQL API",
   "main": "index.js",
+  "Author": "Peter de Lange",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
