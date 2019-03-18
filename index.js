@@ -31,10 +31,9 @@ async function main() {
   };
   try {
     data = await graphQLClient.request(mutation, variables);
-    token = data.token;
+    token = data.signin.token;
     console.log('Received token: ' + token);
   } catch (e) {
-    console.log(e);
     console.log('Login not possible, trying to register new user...');
 
     mutation = /* GraphQL */ `
@@ -51,7 +50,7 @@ async function main() {
     };
     try {
       data = await graphQLClient.request(mutation, variables);
-      token = data.token;
+      token = data.signup.token;
       console.log('Received token: ' + token);
     } catch (e) {
       // No login and signup possible...
