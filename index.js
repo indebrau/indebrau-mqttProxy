@@ -4,7 +4,6 @@ const { GraphQLClient } = require('graphql-request');
 const userMail = 'InputUser';
 const userName = 'InputUser';
 const userPw = 'Ewi_g9fTD}Nr%Xj@';
-const backendAppSecret = 'wZL_my[iy3Z8XNd';
 const backendLocation = 'https://indebrau-backend.herokuapp.com';
 
 var mqttClient = MQTT.connect('tcp://localhost:1883', {
@@ -20,8 +19,8 @@ async function main() {
   let data;
   let token;
   let mutation = /* GraphQL */ `
-    mutation login($email: String!, $password: String!) {
-      login(email: $email, password: $password) {
+    mutation signin($email: String!, $password: String!) {
+      signin(email: $email, password: $password) {
         token
       }
     }
@@ -38,18 +37,8 @@ async function main() {
     console.log('Login not possible, trying to register new user...');
 
     mutation = /* GraphQL */ `
-      mutation signup(
-        $name: String!
-        $password: String!
-        $email: String!
-        $registrationSecret: String!
-      ) {
-        signup(
-          name: $name
-          password: $password
-          email: $email
-          registrationSecret: $registrationSecret
-        ) {
+      mutation signup($name: String!, $password: String!, $email: String!) {
+        signup(name: $name, password: $password, email: $email) {
           token
         }
       }
@@ -57,8 +46,7 @@ async function main() {
     variables = {
       name: userName,
       password: userPw,
-      email: userMail,
-      registrationSecret: backendAppSecret
+      email: userMail
     };
     try {
       data = await graphQLClient.request(mutation, variables);
