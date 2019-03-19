@@ -1,16 +1,12 @@
 {
-  "name": "mqttproxy",
+  "name": "indebrau-mqtt-proxy",
   "version": "0.0.1",
-  "description": "A proxy for forwarding MQTT Messages to a GraphQL API",
+  "description": "A proxy for forwarding MQTT messages to the indebrau GraphQL API",
   "main": "index.js",
-  "Author": "Peter de Lange",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "dependencies": {
+    "mqtt": "^2.18.8",
+    "graphql-request": "^1.8.2"
   },
   "author": "Peter de Lange",
-  "license": "ISC",
-  "dependencies": {
-    "mqtt": "2.18.8",
-    "graphql-request": "^1.8.2"
-  }
+  "license": "ISC"
 }
