@@ -67,11 +67,26 @@ async function main() {
   });
   console.log('Starting...');
 
-  // now we subscribe to all topics we want to put into the database
-  // TODO
+  // now we subscribe to all topics
+  // we want to sent to the backend server
   mqttClient.subscribe('fermentation/fridge/temperature');
+  mqttClient.subscribe('fermentation/fridge/heating');
+  mqttClient.subscribe('fermentation/fridge/cooling');
   mqttClient.subscribe('fermentation/freezer/temperature');
-  mqttClient.subscribe('mashing/mashkettle/temperature');
+  mqttClient.subscribe('fermentation/freezer/heating');
+  mqttClient.subscribe('fermentation/freezer/cooling');
+  mqttClient.subscribe('boiling/wortCopper/temperature');
+  mqttClient.subscribe('boiling/wortCopper/heating');
+  mqttClient.subscribe('boiling/pump/power');
+  mqttClient.subscribe('mashing/mashTun/temperature');
+  mqttClient.subscribe('mashing/mashTun/heating');
+  mqttClient.subscribe('mashing/agitator/power');
+  mqttClient.subscribe('ispindel/iSpindel1/gravity');
+  mqttClient.subscribe('ispindel/iSpindel1/tilt');
+  mqttClient.subscribe('ispindel/iSpindel1/temperature');
+  mqttClient.subscribe('ispindel/iSpindel2/gravity');
+  mqttClient.subscribe('ispindel/iSpindel2/temperature');
+  mqttClient.subscribe('ispindel/iSpindel2/tilt');
   console.log('Subscriptions done!');
 }
 
