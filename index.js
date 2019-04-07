@@ -105,7 +105,7 @@ mqttClient.on('message', function(topic, message) {
       mutation addGraphData(
         $sensorName: String!
         $sensorTimeStamp: DateTime!
-        $sensorValue: Float!
+        $sensorValue: String!
       ) {
         addGraphData(
           sensorName: $sensorName
