@@ -54,7 +54,7 @@ async function main() {
       console.log('Received token: ' + token);
     } catch (e) {
       // No login and signup possible...
-      console.log(e);
+      console.error(e);
       process.exit(1);
     }
   }
@@ -116,7 +116,7 @@ mqttClient.on('message', function(topic, message) {
         }
       }
     `;
-    graphQLClient.request(mutation, sensorData).then(data => console.log(data));
+    graphQLClient.request(mutation, sensorData).then(data => console.log(data)).catch(error => console.error(JSON.parse(JSON.stringify(error)).response.errors));
   } catch (e) {
     console.log(e);
   }
