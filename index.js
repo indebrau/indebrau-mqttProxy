@@ -4,7 +4,7 @@ const { GraphQLClient } = require('graphql-request');
 const userMail = 'InputUser';
 const userName = 'InputUser';
 const userPw = 'Ewi_g9fTD}Nr%Xj@';
-const backendLocation = 'https://indebrau-backend.herokuapp.com';
+const backendLocation = 'https://api.indebrau.de';
 
 var mqttClient = MQTT.connect('tcp://localhost:1883', {
   clientId: 'braustube-mqttProxy'
@@ -53,7 +53,7 @@ async function main() {
       token = data.signup.token;
       console.log('Received token: ' + token);
     } catch (e) {
-      // No login and signup possible...
+      // no login and signup possible...
       console.error(e);
       process.exit(1);
     }
@@ -81,6 +81,8 @@ async function main() {
   mqttClient.subscribe('mashing/mashTun/temperature');
   mqttClient.subscribe('mashing/mashTun/heating');
   mqttClient.subscribe('mashing/agitator/power');
+  mqttClient.subscribe('mashing/sparge/temperature');
+  mqttClient.subscribe('mashing/sparge/heating');
   mqttClient.subscribe('ispindel/iSpindel1/gravity');
   mqttClient.subscribe('ispindel/iSpindel1/tilt');
   mqttClient.subscribe('ispindel/iSpindel1/temperature');
