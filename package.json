@@ -5,11 +5,12 @@
   "description": "A proxy for forwarding MQTT messages to the Indebrau GraphQL API",
   "main": "index.js",
   "dependencies": {
-    "mqtt": "3.0.0",
-    "graphql-request": "1.8.2"
+    "dotenv": "^8.2.0",
+    "graphql-request": "1.8.2",
+    "mqtt": "4.0.1"
   },
   "devDependencies": {
-    "eslint": "6.8.0"
+    "eslint": "7.0.0"
   },
   "author": "Peter de Lange",
   "license": "ISC"

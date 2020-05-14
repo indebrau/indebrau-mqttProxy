@@ -1,13 +1,15 @@
+require('dotenv').config();
 const MQTT = require('mqtt');
 const { GraphQLClient } = require('graphql-request');
 
-const userMail = 'InputUser';
-const userName = 'InputUser';
-const userPw = 'Ewi_g9fTD}Nr%Xj@';
-const backendLocation = 'https://api.indebrau.de';
 
-var mqttClient = MQTT.connect('tcp://localhost:1883', {
-  clientId: 'braustube-mqttProxy'
+const userMail = process.env.USERMAIL;
+const userName = process.env.USERNAME;
+const userPw = process.env.USERPW;
+const backendLocation = process.env.BACKENDLOCATION;
+
+var mqttClient = MQTT.connect(process.env.MQTTSERVERADDRESS, {
+  clientId: 'braustube-mqttProxy',
 });
 
 var graphQLClient = new GraphQLClient(backendLocation);
@@ -27,7 +29,7 @@ async function main() {
   `;
   let variables = {
     email: userMail,
-    password: userPw
+    password: userPw,
   };
   try {
     data = await graphQLClient.request(mutation, variables);
@@ -46,7 +48,7 @@ async function main() {
     variables = {
       name: userName,
       password: userPw,
-      email: userMail
+      email: userMail,
     };
     try {
       data = await graphQLClient.request(mutation, variables);
@@ -62,37 +64,42 @@ async function main() {
   // update client variable
   graphQLClient = new GraphQLClient(backendLocation, {
     headers: {
-      Authorization: 'Bearer ' + token
-    }
+      Authorization: 'Bearer ' + token,
+    },
   });
   console.log('Starting...');
 
   // now we subscribe to all topics
   // we want to sent to the backend server
+  mqttClient.subscribe('mashing/mashTun/temperature');
+  mqttClient.subscribe('mashing/mashTun/heating');
+  mqttClient.subscribe('mashing/agitator/power');
+  mqttClient.subscribe('mashing/sparge/temperature');
+  mqttClient.subscribe('mashing/sparge/heating');
+  mqttClient.subscribe('lautering/lauteringKettle/level');
+  mqttClient.subscribe('boiling/wortCopper/temperature');
+  mqttClient.subscribe('boiling/wortCopper/heating');
+  mqttClient.subscribe('boiling/pump/power');
   mqttClient.subscribe('fermentation/fridge/temperature');
   mqttClient.subscribe('fermentation/fridge/heating');
   mqttClient.subscribe('fermentation/fridge/cooling');
   mqttClient.subscribe('fermentation/freezer/temperature');
   mqttClient.subscribe('fermentation/freezer/heating');
   mqttClient.subscribe('fermentation/freezer/cooling');
-  mqttClient.subscribe('boiling/wortCopper/temperature');
-  mqttClient.subscribe('boiling/wortCopper/heating');
-  mqttClient.subscribe('boiling/pump/power');
-  mqttClient.subscribe('mashing/mashTun/temperature');
-  mqttClient.subscribe('mashing/mashTun/heating');
-  mqttClient.subscribe('mashing/agitator/power');
-  mqttClient.subscribe('mashing/sparge/temperature');
-  mqttClient.subscribe('mashing/sparge/heating');
   mqttClient.subscribe('ispindel/iSpindel1/gravity');
   mqttClient.subscribe('ispindel/iSpindel1/tilt');
   mqttClient.subscribe('ispindel/iSpindel1/temperature');
   mqttClient.subscribe('ispindel/iSpindel2/gravity');
-  mqttClient.subscribe('ispindel/iSpindel2/temperature');
   mqttClient.subscribe('ispindel/iSpindel2/tilt');
+  mqttClient.subscribe('ispindel/iSpindel2/temperature');
+  mqttClient.subscribe('ispindel/iSpindel3/gravity');
+  mqttClient.subscribe('ispindel/iSpindel3/tilt');
+  mqttClient.subscribe('ispindel/iSpindel3/temperature');
+
   console.log('Subscriptions done!');
 }
 
-mqttClient.on('message', function(topic, message) {
+mqttClient.on('message', function (topic, message) {
   let sensorName = topic.toString();
   let sensorValue = message.toString();
   let sensorTimeStamp = new Date().toJSON();
@@ -100,7 +107,7 @@ mqttClient.on('message', function(topic, message) {
   let sensorData = {
     sensorName: sensorName,
     sensorTimeStamp: sensorTimeStamp,
-    sensorValue: sensorValue
+    sensorValue: sensorValue,
   };
   try {
     const mutation = /* GraphQL */ `
@@ -118,7 +125,12 @@ mqttClient.on('message', function(topic, message) {
         }
       }
     `;
-    graphQLClient.request(mutation, sensorData).then(data => console.log(data)).catch(error => console.error(JSON.parse(JSON.stringify(error)).response.errors));
+    graphQLClient
+      .request(mutation, sensorData)
+      .then((data) => console.log(data.message))
+      .catch((error) =>
+        console.error(JSON.parse(JSON.stringify(error)).response.errors[0].message)
+      );
   } catch (e) {
     console.log(e);
   }
