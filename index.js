@@ -127,7 +127,7 @@ mqttClient.on('message', function (topic, message) {
     `;
     graphQLClient
       .request(mutation, sensorData)
-      .then((data) => console.log(data.message))
+      .then((data) => console.log('Stored data for ' + sensorName + 'with id: ' + data.addGraphData.id))
       .catch((error) =>
         console.error(JSON.parse(JSON.stringify(error)).response.errors[0].message)
       );
