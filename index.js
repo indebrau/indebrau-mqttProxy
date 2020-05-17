@@ -86,13 +86,10 @@ async function main() {
   mqttClient.subscribe('fermentation/freezer/temperature');
   mqttClient.subscribe('fermentation/freezer/heating');
   mqttClient.subscribe('fermentation/freezer/cooling');
-  mqttClient.subscribe('ispindel/iSpindel1/gravity');
   mqttClient.subscribe('ispindel/iSpindel1/tilt');
   mqttClient.subscribe('ispindel/iSpindel1/temperature');
-  mqttClient.subscribe('ispindel/iSpindel2/gravity');
   mqttClient.subscribe('ispindel/iSpindel2/tilt');
   mqttClient.subscribe('ispindel/iSpindel2/temperature');
-  mqttClient.subscribe('ispindel/iSpindel3/gravity');
   mqttClient.subscribe('ispindel/iSpindel3/tilt');
   mqttClient.subscribe('ispindel/iSpindel3/temperature');
 
