@@ -71,27 +71,11 @@ async function main() {
 
   // now we subscribe to all topics
   // we want to sent to the backend server
-  mqttClient.subscribe('mashing/mashTun/temperature');
-  mqttClient.subscribe('mashing/mashTun/heating');
-  mqttClient.subscribe('mashing/agitator/power');
-  mqttClient.subscribe('mashing/sparge/temperature');
-  mqttClient.subscribe('mashing/sparge/heating');
-  mqttClient.subscribe('lautering/lauteringKettle/level');
-  mqttClient.subscribe('boiling/wortCopper/temperature');
-  mqttClient.subscribe('boiling/wortCopper/heating');
-  mqttClient.subscribe('boiling/pump/power');
-  mqttClient.subscribe('fermentation/fridge/temperature');
-  mqttClient.subscribe('fermentation/fridge/heating');
-  mqttClient.subscribe('fermentation/fridge/cooling');
-  mqttClient.subscribe('fermentation/freezer/temperature');
-  mqttClient.subscribe('fermentation/freezer/heating');
-  mqttClient.subscribe('fermentation/freezer/cooling');
-  mqttClient.subscribe('ispindel/iSpindel1/tilt');
-  mqttClient.subscribe('ispindel/iSpindel1/temperature');
-  mqttClient.subscribe('ispindel/iSpindel2/tilt');
-  mqttClient.subscribe('ispindel/iSpindel2/temperature');
-  mqttClient.subscribe('ispindel/iSpindel3/tilt');
-  mqttClient.subscribe('ispindel/iSpindel3/temperature');
+  mqttClient.subscribe('mashing/#');
+  mqttClient.subscribe('lautering/#');
+  mqttClient.subscribe('boiling/#');
+  mqttClient.subscribe('fermentation/#');
+  mqttClient.subscribe('ispindel/#');
 
   console.log('Subscriptions done!');
 }
