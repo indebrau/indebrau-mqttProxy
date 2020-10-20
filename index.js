@@ -85,21 +85,21 @@ mqttClient.on('message', function (topic, message) {
   let sensorTimeStamp = new Date().toJSON();
 
   let sensorData = {
-    sensor_name: sensorName,
-    sensor_time_stamp: sensorTimeStamp,
-    sensor_value: sensorValue
+    sensorName: sensorName,
+    sensorTimeStamp: sensorTimeStamp,
+    sensorValue: sensorValue
   };
   try {
     const mutation = /* GraphQL */ `
       mutation addGraphData(
-        $sensor_name: String!
-        $sensor_time_stamp: DateTime!
-        $sensor_value: String!
+        $sensorName: String!
+        $sensorTimeStamp: DateTime!
+        $sensorValue: String!
       ) {
         addGraphData(
-          sensor_name: $sensor_name
-          sensor_time_stamp: $sensor_time_stamp
-          sensor_value: $sensor_value
+          sensorName: $sensorName
+          sensorTimeStamp: $sensorTimeStamp
+          sensorValue: $sensorValue
         ) {
           id
         }
