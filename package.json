@@ -1,11 +1,11 @@
 {
   "name": "indebrau-mqtt-proxy",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "repository": "https://github.com/PedeLa/indebrau-mqttProxy",
   "description": "A proxy for forwarding MQTT messages to the indebrau GraphQL API",
   "main": "index.js",
   "dependencies": {
-    "dotenv": "^8.2.0",
+    "dotenv": "8.2.0",
     "graphql-request": "3.2.0",
     "graphql": "15.3.0",
     "mqtt": "4.2.1"
