@@ -80,24 +80,24 @@ async function main() {
 }
 
 mqttClient.on('message', function (topic, message) {
-  let sensorName = topic.toString();
+  let sensorTopic = topic.toString();
   let sensorValue = message.toString();
   let sensorTimeStamp = new Date().toJSON();
 
   let sensorData = {
-    sensorName: sensorName,
+    sensorTopic: sensorTopic,
     sensorTimeStamp: sensorTimeStamp,
     sensorValue: sensorValue
   };
   try {
     const mutation = /* GraphQL */ `
-      mutation addGraphData(
-        $sensorName: String!
+      mutation addSensorData(
+        $sensorTopic: String!
         $sensorTimeStamp: DateTime!
         $sensorValue: String!
       ) {
-        addGraphData(
-          sensorName: $sensorName
+        addSensorData(
+          sensorTopic: $sensorTopic
           sensorTimeStamp: $sensorTimeStamp
           sensorValue: $sensorValue
         ) {
@@ -109,7 +109,7 @@ mqttClient.on('message', function (topic, message) {
       .request(mutation, sensorData)
       .then((data) =>
         console.log(
-          `Stored data for ${sensorName} with id(s): ${JSON.stringify(data.addGraphData)}`
+          `Stored data for ${sensorTopic} with id(s): ${JSON.stringify(data.addGraphData)}`
         )
       )
       .catch((error) =>
