@@ -109,7 +109,7 @@ mqttClient.on('message', function (topic, message) {
       .request(mutation, sensorData)
       .then((data) =>
         console.log(
-          `Stored data for ${sensorTopic} with id(s): ${JSON.stringify(data)}`
+          `Stored data for ${sensorTopic} with id(s): ${JSON.stringify(data.addSensorData)}`
         )
       )
       .catch((error) =>
